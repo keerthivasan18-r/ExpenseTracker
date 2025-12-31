@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Expense Tracker & Budget Management</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app-root">
+      <!-- Authentication Screen -->
+      <section id="auth-section" class="auth-section">
+        <div class="auth-hero">
+          <h1 class="app-title">Student Expense Tracker</h1>
+          <p class="app-tagline">
+            Track every chai, snack, and semester fee in <span class="rupee">₹</span>.
+            Stay in control of your pocket money and semester budget.
+          </p>
+          <ul class="hero-points">
+            <li>Set a monthly budget in <span class="rupee">₹</span></li>
+            <li>See where your money goes in real time</li>
+            <li>Built for students, not accountants</li>
+          </ul>
+        </div>
+
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <button
+              class="auth-tab auth-tab-active"
+              data-tab="login"
+              id="login-tab-btn"
+            >
+              Login
+            </button>
+            <button class="auth-tab" data-tab="signup" id="signup-tab-btn">
+              New student? Sign Up
+            </button>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" class="auth-form auth-form-active">
+            <h2>Welcome back 👋</h2>
+            <p class="form-subtitle">
+              Continue tracking your expenses and stay within your budget.
+            </p>
+
+            <label class="input-group">
+              <span>Email</span>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="you@college.edu"
+                required
+              />
+            </label>
+
+            <label class="input-group">
+              <span>Password</span>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Enter your password"
+                required
+              />
+            </label>
+
+            <div class="form-row">
+              <label class="checkbox-group">
+                <input type="checkbox" id="remember-me" />
+                <span>Remember me on this device</span>
+              </label>
+              <span class="text-muted small-text">Use your campus email if possible</span>
+            </div>
+
+            <button type="submit" class="btn-primary">Login &rarr;</button>
+            <p class="switch-copy">
+              New here?
+              <button
+                type="button"
+                class="link-button"
+                id="go-to-signup"
+              >
+                Create a student account
+              </button>
+            </p>
+            <p class="form-message" id="login-message"></p>
+          </form>
+
+          <!-- Sign Up Form -->
+          <form id="signup-form" class="auth-form">
+            <h2>Create your student space ✨</h2>
+            <p class="form-subtitle">
+              Create your account once and track every expense in
+              <span class="rupee">₹</span> across the semester.
+            </p>
+
+            <label class="input-group">
+              <span>Full Name</span>
+              <input
+                type="text"
+                id="signup-name"
+                placeholder="e.g., Keerthivasan R"
+                required
+              />
+            </label>
+
+            <label class="input-group">
+              <span>College / University</span>
+              <input
+                type="text"
+                id="signup-college"
+                placeholder="e.g., ABC College of Engineering"
+                required
+              />
+            </label>
+
+            <label class="input-group">
+              <span>Email</span>
+              <input
+                type="email"
+                id="signup-email"
+                placeholder="you@college.edu"
+                required
+              />
+            </label>
+
+            <div class="form-row">
+              <label class="input-group">
+                <span>Password</span>
+                <input
+                  type="password"
+                  id="signup-password"
+                  placeholder="Create a strong password"
+                  required
+                />
+              </label>
+              <label class="input-group">
+                <span>Confirm Password</span>
+                <input
+                  type="password"
+                  id="signup-confirm-password"
+                  placeholder="Re-enter password"
+                  required
+                />
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary">
+              Create Account & Start Tracking
+            </button>
+            <p class="switch-copy">
+              Already tracking?
+              <button
+                type="button"
+                class="link-button"
+                id="go-to-login"
+              >
+                Login instead
+              </button>
+            </p>
+            <p class="form-message" id="signup-message"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- Main Dashboard -->
+      <section id="dashboard-section" class="dashboard-section hidden">
+        <header class="top-nav">
+          <div class="brand">
+            <div class="brand-logo">₹</div>
+            <div>
+              <h1>Student Expense Tracker</h1>
+              <p>Simple budgeting for focused students</p>
+            </div>
+          </div>
+          <div class="nav-right">
+            <div class="user-chip">
+              <span class="user-avatar" id="user-initial">S</span>
+              <div>
+                <p id="user-name">Student</p>
+                <span id="user-college" class="small-text text-muted"></span>
+              </div>
+            </div>
+            <button id="logout-btn" class="btn-ghost">Logout</button>
+          </div>
+        </header>
+
+        <main class="dashboard-main">
+          <section class="summary-grid">
+            <article class="summary-card">
+              <h2>Monthly Budget</h2>
+              <p class="summary-value" id="summary-budget">₹0</p>
+              <p class="summary-label">How much you planned to spend this month</p>
+            </article>
+
+            <article class="summary-card">
+              <h2>Spent This Month</h2>
+              <p class="summary-value" id="summary-spent">₹0</p>
+              <p class="summary-label">Every chai, snack, and ride you log</p>
+            </article>
+
+            <article class="summary-card">
+              <h2>Remaining</h2>
+              <p class="summary-value" id="summary-remaining">₹0</p>
+              <p class="summary-label">Try to keep this positive until month end</p>
+            </article>
+          </section>
+
+          <section class="progress-section">
+            <div class="progress-layout">
+              <div class="progress-left">
+                <div class="progress-header">
+                  <h2>Budget Progress</h2>
+                  <span id="progress-percent" class="small-text text-muted">0% used</span>
+                </div>
+                <div class="progress-bar-outer">
+                  <div id="progress-bar-inner" class="progress-bar-inner"></div>
+                </div>
+                <p id="budget-alert" class="budget-alert small-text"></p>
+                <form id="budget-form" class="budget-form">
+                  <label class="input-group inline-input-group">
+                    <span>Set / update your monthly budget (in <span class="rupee">₹</span>)</span>
+                    <div class="inline-input-row">
+                      <input
+                        type="number"
+                        id="budget-input"
+                        placeholder="e.g., 5000"
+                        min="0"
+                      />
+                      <button type="submit" class="btn-secondary">
+                        Save budget
+                      </button>
+                    </div>
+                  </label>
+                  <p class="form-message small-text" id="budget-message"></p>
+                </form>
+              </div>
+              <div class="progress-right">
+                <h3 class="small-heading">Where your ₹ goes (pie view)</h3>
+                <canvas
+                  id="category-pie"
+                  width="220"
+                  height="220"
+                  aria-label="Spending distribution pie chart"
+                ></canvas>
+                <div id="pie-tooltip" class="pie-tooltip hidden"></div>
+                <p class="small-text text-muted center-text">
+                  Colours: Food, Travel, Fees, Fun & Others.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid-two-columns">
+            <article class="panel">
+              <h2>Quick Add Expense</h2>
+              <p class="panel-subtitle">
+                Log your latest expense in <span class="rupee">₹</span> to stay on track.
+              </p>
+              <div class="ai-helper">
+                <h3>Describe your expense in your words</h3>
+                <p class="small-text text-muted">
+                  Example: “Yesterday I spent 150 on bus to college and 50 on chai with
+                  friends.”
+                </p>
+                <textarea
+                  id="ai-description"
+                  rows="3"
+                  placeholder="Type something like: Spent 200 on movie tickets and 80 on popcorn today evening."
+                ></textarea>
+                <button type="button" id="ai-fill-btn" class="btn-secondary full-width">
+                  Let the app guess & fill the fields
+                </button>
+              </div>
+              <form id="expense-form" class="expense-form">
+                <label class="input-group">
+                  <span>Expense title</span>
+                  <input
+                    type="text"
+                    id="expense-title"
+                    placeholder="e.g., Evening chai with friends"
+                    required
+                  />
+                </label>
+
+                <div class="form-row">
+                  <label class="input-group">
+                    <span>Category</span>
+                    <select id="expense-category" required>
+                      <option value="">Select category</option>
+                      <option value="Food">Food & Snacks</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Fees">Fees & Tuition</option>
+                      <option value="Fun">Fun & Hangouts</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </label>
+
+                  <label class="input-group">
+                    <span>Amount (in <span class="rupee">₹</span>)</span>
+                    <input
+                      type="number"
+                      id="expense-amount"
+                      placeholder="e.g., 120"
+                      min="0"
+                      required
+                    />
+                  </label>
+                </div>
+
+                <label class="input-group">
+                  <span>Date</span>
+                  <span class="date-input-wrapper">
+                    <input type="date" id="expense-date" required />
+                    <span class="date-icon" aria-hidden="true">📅</span>
+                  </span>
+                </label>
+
+                <button type="submit" class="btn-primary">
+                  Add Expense
+                </button>
+                <p class="form-message" id="expense-message"></p>
+              </form>
+            </article>
+
+            <article class="panel">
+              <h2>Recent Expenses</h2>
+              <p class="panel-subtitle">
+                A quick glance at where your <span class="rupee">₹</span> is going.
+              </p>
+              <div class="table-wrapper">
+                <table class="expense-table">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Amount (₹)</th>
+                      <th>Date</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="expense-table-body">
+                    <tr class="empty-row">
+                      <td colspan="5">
+                        No expenses yet. Start by logging your first chai or bus ride.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel stats-panel">
+            <h2>Spending by Category (This Month)</h2>
+            <p class="panel-subtitle">
+              See which area is eating most of your <span class="rupee">₹</span> — food,
+              travel, fees, or fun.
+            </p>
+            <div id="category-stats" class="category-stats">
+              <p class="small-text text-muted">
+                Add a few expenses to see a visual breakdown here.
+              </p>
+            </div>
+          </section>
+        </main>
+
+        <footer class="footer">
+          <p>
+            Built for students to stay mindful with money, not to stress about it.
+          </p>
+        </footer>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
+
